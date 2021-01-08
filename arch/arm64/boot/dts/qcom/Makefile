@@ -2,15 +2,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb msm8916-mtp.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= msm8996-mtp.dtb
 dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
 
-ifeq ($(CONFIG_MACH_ASUS),y)
-ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
-	dtbo-$(CONFIG_MACH_ASUS_X01AD) += sdm632-X01AD-overlay.dtbo
-sdm632-X01AD-overlay.dtbo-base := sdm632-X01AD.dtb
-else
-dtb-$(CONFIG_MACH_ASUS_X01AD) += sdm632-X01AD.dtb
-endif
-else
-
 ifeq ($(CONFIG_BUILD_ARM64_DT_OVERLAY),y)
 	dtbo-$(CONFIG_ARCH_SDM845) += \
 		sdm845-cdp-overlay.dtbo \
@@ -641,6 +632,9 @@ dtb-$(CONFIG_ARCH_SDM450) += sdm450-rcm.dtb \
 	sda450-pmi632-cdp-s2.dtb \
 	sda450-pmi632-mtp-s3.dtb
 
+ifeq ($(CONFIG_MACH_ASUS_SDM632),y)
+dtb-$(CONFIG_MACH_ASUS_X01AD) += sdm632-X01AD.dtb
+else
 dtb-$(CONFIG_ARCH_SDM632) += sdm632-rumi.dtb \
 	sdm632-cdp-s2.dtb \
 	sdm632-ext-codec-cdp-s3.dtb \
@@ -656,6 +650,7 @@ dtb-$(CONFIG_ARCH_SDM632) += sdm632-rumi.dtb \
 	sdm632-pm8004-rcm.dtb \
 	sdm632-pm8004-qrd-sku4.dtb \
 	sdm632-pm8004-qrd.dtb
+endif
 
 dtb-$(CONFIG_ARCH_SDM439) += sdm439-mtp.dtb \
 	sdm439-cdp.dtb \
@@ -681,8 +676,6 @@ dtb-$(CONFIG_ARCH_SDM429) += sdm429-mtp.dtb \
 
 endif
 endif
-
-dtb-$(CONFIG_ARCH_SDM845_VM) += sdm845-vm.dtb
 
 always		:= $(dtb-y)
 subdir-y	:= $(dts-dirs)
